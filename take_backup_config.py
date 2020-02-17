@@ -8,7 +8,7 @@ import time
 now = datetime.datetime.now()
 
 
-def backup_config(ip, user, pw):
+def backup_config(ip, user, pw, group_name):
     """Take back up of the VC with host IP, username and password as the input and write it to a file"""
 
     # Open a socket,copy the output
@@ -24,6 +24,7 @@ def backup_config(ip, user, pw):
     backup_file = open("{}_backup_config.txt".format(ip), "w")
     backup_file.write(output.decode("utf-8"))
     backup_file.close()
+    os.system('move {0}_backup_config.txt {1}'.format(ip, group_name))
     client.close()
 
 
@@ -49,13 +50,13 @@ for ip_address in vc_list.readlines():
     if response == 0:
         try:
             # Use SG user,pass
-            backup_config(IP, 'admin', 'sgwifi')
+            backup_config(IP, 'admin', 'sgwifi', group_name)
             print('{0} {1} Backup successful!'.format(IP, now.strftime('%d/%m/%Y %I:%M:%S %p')))
             logs.write('{0} {1} Backup successful!\n'.format(IP, now.strftime('%d/%m/%Y %I:%M:%S %p')))
             suc += 1
         except paramiko.ssh_exception.AuthenticationException:
             # Use factory-set user,pass
-            backup_config(IP, 'admin', 'admin')
+            backup_config(IP, 'admin', 'admin', group_name)
             print('{0} {1} Backup successful!'.format(IP, now.strftime('%d/%m/%Y %I:%M:%S %p')))
             logs.write('{0} {1} Backup successful!\n'.format(IP, now.strftime('%d/%m/%Y %I:%M:%S %p')))
             suc += 1
