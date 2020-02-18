@@ -42,17 +42,15 @@ fail = 0
 for ip_address in vc_list.readlines():
     IP = ip_address.strip()
     # Check if host is reachable and proceed
-    response = os.system('ping {} -n 2 '.format(ip_address))
+    response = os.system('ping {} -n 2\n'.format(ip_address))
     if response == 0:
         try:
-            # Use SG user,pass
-            backup_config(IP, 'admin', 'sgwifi', group_name)
+            backup_config(IP, 'admin', 'sgwifi', group_name)  # Use SG user,pass
             print('{0} {1} Backup successful!'.format(IP, time.strftime('%d/%m/%Y %I:%M:%S %p')))
             logs.write('{0} {1} Backup successful!\n'.format(IP, time.strftime('%d/%m/%Y %I:%M:%S %p')))
             suc += 1
         except paramiko.ssh_exception.AuthenticationException:
-            # Use factory-set user,pass
-            backup_config(IP, 'admin', 'admin', group_name)
+            backup_config(IP, 'admin', 'admin', group_name)  # Use default user,pass
             print('{0} {1} Backup successful!'.format(IP, time.strftime('%d/%m/%Y %I:%M:%S %p')))
             logs.write('{0} {1} Backup successful!\n'.format(IP, time.strftime('%d/%m/%Y %I:%M:%S %p')))
             suc += 1
