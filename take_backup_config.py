@@ -1,14 +1,11 @@
 # v2.2
 
-import datetime
 import os
 import paramiko
 import time
 
-now = datetime.datetime.now()
 
-
-def backup_config(ip, user, pw, group_name):
+def backup_config(ip, user, pw, group):
     """Take back up of the VC with host IP, username and password as the input and write it to a file"""
 
     # Open a socket,copy the output
@@ -21,10 +18,9 @@ def backup_config(ip, user, pw, group_name):
     time.sleep(2)
     output = chan.recv(99999999)
     # Create a file,write the config and close it
-    backup_file = open("{}_backup_config.txt".format(ip), "w")
+    backup_file = open("{0}/{1}_backup_config.txt".format(group, ip), "w")
     backup_file.write(output.decode("utf-8"))
     backup_file.close()
-    os.system('move {0}_backup_config.txt {1}'.format(ip, group_name))
     client.close()
 
 
@@ -36,7 +32,7 @@ os.system('md {}'.format(group_name))
 vc_list = open("vc_list.txt", "r")
 
 # Maintain logs
-logs = open('{}/backup_logs.txt'.format(group_name), "a")
+logs = open("{}/backup_logs.txt".format(group_name), "a")
 
 print('='*66+"\n")
 
@@ -46,29 +42,29 @@ fail = 0
 for ip_address in vc_list.readlines():
     IP = ip_address.strip()
     # Check if host is reachable and proceed
-    response = os.system('ping {} -n 1'.format(ip_address))
+    response = os.system('ping {} -n 2 '.format(ip_address))
     if response == 0:
         try:
             # Use SG user,pass
             backup_config(IP, 'admin', 'sgwifi', group_name)
-            print('{0} {1} Backup successful!'.format(IP, now.strftime('%d/%m/%Y %I:%M:%S %p')))
-            logs.write('{0} {1} Backup successful!\n'.format(IP, now.strftime('%d/%m/%Y %I:%M:%S %p')))
+            print('{0} {1} Backup successful!'.format(IP, time.strftime('%d/%m/%Y %I:%M:%S %p')))
+            logs.write('{0} {1} Backup successful!\n'.format(IP, time.strftime('%d/%m/%Y %I:%M:%S %p')))
             suc += 1
         except paramiko.ssh_exception.AuthenticationException:
             # Use factory-set user,pass
             backup_config(IP, 'admin', 'admin', group_name)
-            print('{0} {1} Backup successful!'.format(IP, now.strftime('%d/%m/%Y %I:%M:%S %p')))
-            logs.write('{0} {1} Backup successful!\n'.format(IP, now.strftime('%d/%m/%Y %I:%M:%S %p')))
+            print('{0} {1} Backup successful!'.format(IP, time.strftime('%d/%m/%Y %I:%M:%S %p')))
+            logs.write('{0} {1} Backup successful!\n'.format(IP, time.strftime('%d/%m/%Y %I:%M:%S %p')))
             suc += 1
         except:
-            # Throw error if any
-            print('{0} {1} Backup failed! [Host reachable]\n'.format(IP, now.strftime('%d/%m/%Y %I:%M:%S %p')))
-            logs.write('{0} {1} Backup failed! [Host reachable]\n'.format(IP, now.strftime('%d/%m/%Y %I:%M:%S %p')))
+            # Throw error if any and continue
+            print('{0} {1} Backup failed! [Host reachable]\n'.format(IP, time.strftime('%d/%m/%Y %I:%M:%S %p')))
+            logs.write('{0} {1} Backup failed! [Host reachable]\n'.format(IP, time.strftime('%d/%m/%Y %I:%M:%S %p')))
             fail += 1
     else:
         # If host unreachable
-        print('{0} {1} Backup failed![Host unreachable]\n'.format(IP, now.strftime('%d/%m/%Y %I:%M:%S %p')))
-        logs.write('{0} {1} Backup failed![Host unreachable]\n'.format(IP, now.strftime('%d/%m/%Y %I:%M:%S %p')))
+        print('{0} {1} Backup failed![Host unreachable]\n'.format(IP, time.strftime('%d/%m/%Y %I:%M:%S %p')))
+        logs.write('{0} {1} Backup failed![Host unreachable]\n'.format(IP, time.strftime('%d/%m/%Y %I:%M:%S %p')))
         fail += 1
 
 # Print and log results:
