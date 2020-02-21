@@ -18,7 +18,7 @@ def backup_config(ip, user, pw, group):
     time.sleep(2)
     output = chan.recv(99999999)
     # Create a file,write the config and close it
-    backup_file = open("{0}/{1}_backup_config.txt".format(group, ip), "w")
+    backup_file = open("{0}/backup_files/{1}_backup_config.txt".format(group, ip), "w")
     backup_file.write(output.decode("utf-8"))
     backup_file.close()
     client.close()
@@ -26,7 +26,7 @@ def backup_config(ip, user, pw, group):
 
 # Input a group name,create a folder and store logs,backup files
 group_name = input('Enter the group_name :')
-os.system('md {}'.format(group_name))
+os.makedirs('{}/backup_files'.format(group_name))
 
 # Open the file with the list of IPs
 vc_list = open("vc_list.txt", "r")
@@ -65,14 +65,12 @@ for ip_address in vc_list.readlines():
         logs.write('{0} {1} Backup failed![Host unreachable]\n'.format(IP, time.strftime('%d/%m/%Y %I:%M:%S %p')))
         fail += 1
 
-# Print and log results:
+# Print and log results and close vc_list:
 print(' \n'*5)
 print('Finished!\n')
 print('Total={0} Successful={1} Fail={2}\n'.format(suc+fail, suc, fail))
 logs.write(' \n'*5)
 logs.write('Total={0} Successful={1} Fail={2}\n'.format(suc+fail, suc, fail))
-
-# Close files
 logs.close()
 vc_list.close()
 
