@@ -98,13 +98,15 @@ for i in range(1,n+1):
         failed_list.update({vc_name:ip_address})
         
 # Print and log results and close vc_list:
-print(' \n'*5)
+print(' \n'*4)
 print('Finished!\n')
 print('Total={0} Successful={1} Unreachable/Login fail={2}\n'.format(suc+fail, suc, fail))
 for vc,ip in failed_list.items():
     print(vc,ip)
 
-logs.write(' \n'*5)
+print('='*66+"\n")
+
+logs.write(' \n'*4)
 logs.write('Total={0} Successful={1} Unreachable/Login fail={2}\n'.format(suc+fail, suc, fail))
 for vc,ip in failed_list.items():
     logs.write('{0} {1}'.format(vc, ip))
