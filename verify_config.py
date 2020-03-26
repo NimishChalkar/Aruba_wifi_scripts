@@ -79,20 +79,20 @@ for i in range(1,n+1):
                     no_mismatches(vc_name)
                     suc += 1
                 elif new ^ old != {}:  # If there is a mismatch
-                    new = new - old
-                    miss = old - new
+                    new_lines = new - old
+                    miss_lines = old - new
                     with open("{0}/verify_files/{1}_mismatch_logs.txt".format(group_name, vc_name), "w") as mismatch_logs: 
                         mismatch_logs.write('Mismatch in files : ( Missing lines - ; New lines + )\n')
                         mismatch_logs.write('\n')
                         mismatch_logs.write('+ New lines :\n')
                         mismatch_logs.write('\n')
-                        for line in new:
-                            mismatch_logs.write('{} \n'.format(line))
+                        for i in new_lines:
+                            mismatch_logs.write('{} \n'.format(i))
                         mismatch_logs.write('\n')
                         mismatch_logs.write('- Missing lines :\n')
                         mismatch_logs.write('\n')    
-                        for line in miss:
-                            mismatch_logs.write('{} \n'.format(line))
+                        for j in miss_lines:
+                            mismatch_logs.write('{} \n'.format(j))
                     mismatches(vc_name)    
                     mismatch += 1
                     mismatched_list.update({vc_name:ip_address})
@@ -114,20 +114,20 @@ for i in range(1,n+1):
                         no_mismatches(vc_name)
                         suc += 1
                     elif new ^ old != {}:  # If there is a mismatch
-                        new = new - old
-                        miss = old - new
+                        new_lines = new - old
+                        miss_lines = old - new
                         with open("{0}/verify_files/{1}_mismatch_logs.txt".format(group_name,IP), "w") as mismatch_logs: 
                             mismatch_logs.write('Mismatch in files : ( Missing lines - ; New lines + )\n')
                             mismatch_logs.write('\n')
                             mismatch_logs.write('+ New lines :\n')
                             mismatch_logs.write('\n')
-                            for line in new:
-                                mismatch_logs.write('{} \n'.format(line))
+                            for i in new_lines:
+                                mismatch_logs.write('{} \n'.format(i))
                             mismatch_logs.write('\n')    
                             mismatch_logs.write('- Missing lines :\n')
                             mismatch_logs.write('\n')
-                            for line in miss:
-                                mismatch_logs.write('{} \n'.format(line))
+                            for j in miss_lines:
+                                mismatch_logs.write('{} \n'.format(j))
                         mismatches(vc_name)
                         mismatch += 1
                         mismatched_list.update({vc_name:ip_address})
