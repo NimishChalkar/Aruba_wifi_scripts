@@ -87,12 +87,12 @@ for i in range(1,n+1):
                         mismatch_logs.write('+ New lines :\n')
                         mismatch_logs.write('\n')
                         for line in new:
-                            mismatch_logs.write('{} \n'.format(i))
+                            mismatch_logs.write('{} \n'.format(line))
                         mismatch_logs.write('\n')
                         mismatch_logs.write('- Missing lines :\n')
                         mismatch_logs.write('\n')    
                         for line in miss:
-                            mismatch_logs.write('{} \n'.format(j))
+                            mismatch_logs.write('{} \n'.format(line))
                     mismatches(vc_name)    
                     mismatch += 1
                     mismatched_list.update({vc_name:ip_address})
@@ -122,12 +122,12 @@ for i in range(1,n+1):
                             mismatch_logs.write('+ New lines :\n')
                             mismatch_logs.write('\n')
                             for line in new:
-                                mismatch_logs.write('{} \n'.format(i))
+                                mismatch_logs.write('{} \n'.format(line))
                             mismatch_logs.write('\n')    
                             mismatch_logs.write('- Missing lines :\n')
                             mismatch_logs.write('\n')
                             for line in miss:
-                                mismatch_logs.write('{} \n'.format(j))
+                                mismatch_logs.write('{} \n'.format(line))
                         mismatches(vc_name)
                         mismatch += 1
                         mismatched_list.update({vc_name:ip_address})
