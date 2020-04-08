@@ -68,11 +68,11 @@ for i in range(1,n+1):
     response = os.system('ping {} -n 2\n'.format(ip_address))
     if response == 0:
         try:
-            backup_config(ip_address, vc_name, 'admin', 'sgwifi', group_name)  # Use SG user,pass
+            backup_config(ip_address, vc_name, 'username', 'password', group_name)  # Use SG user,pass
             backup_successful(vc_name)
             suc += 1
         except paramiko.ssh_exception.AuthenticationException:
-            backup_config(ip_address, vc_name, 'admin', 'admin', group_name)  # Use default user,pass
+            backup_config(ip_address, vc_name, 'altusername', 'altpassword', group_name)  # Use default user,pass
             backup_successful(vc_name)
             suc += 1
         except TimeoutError:
