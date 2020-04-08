@@ -69,7 +69,7 @@ for i in range(1,n+1):
     response = os.system('ping {} -n 2'.format(ip_address))
     if response == 0:
         try:
-            running_config(ip_address, 'admin', 'sgwifi')# Use SG user,pass
+            running_config(ip_address, 'username', 'password')# Use SG user,pass
             with open("temp.txt", 'r') as temp:
                 new = set(str(temp.read()).split('\n'))
                 old_config = open("{0}/backup_files/{1}.txt".format(group_name, vc_name), 'r')
@@ -104,7 +104,7 @@ for i in range(1,n+1):
                     fail += 1
                     failed_list.update({vc_name:ip_address})
         except paramiko.ssh_exception.AuthenticationException:
-                running_config(ip_address, 'admin', 'admin')  # Use default user,pass
+                running_config(ip_address, 'altusername', 'altpassword')  # Use default user,pass
                 with open('temp.txt', 'r') as temp:
                     new = set(str(temp.read()).split('\n'))
                     old_config = open("{0}/backup_files/{1}.txt".format(group_name, vc_name), 'r')
