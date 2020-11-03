@@ -1,4 +1,4 @@
-# v3
+#!/usr/bin/env python
 
 import os
 import paramiko
@@ -22,7 +22,7 @@ def backup_config(ip, name, user, pw, group):
     try:
         backup_file.write(output.decode("latin1"))
     except UnicodeEncodeError:
-        run_config.write(output.decode("utf-8"))
+        backup_file.write(output.decode("utf-8"))
     backup_file.close()
     client.close()
 
