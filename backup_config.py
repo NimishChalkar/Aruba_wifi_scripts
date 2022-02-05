@@ -5,7 +5,7 @@ import paramiko
 import time
 from openpyxl import load_workbook
 
-def backup_config(ip, name, user, pw, group):
+def backup_config(ip: str, name: str, user: str, pw: str, group: str):
     """Take back up of the VC with host IP, username and password as the input and write it to a file"""
 
     # Open a socket,copy the output
@@ -27,23 +27,23 @@ def backup_config(ip, name, user, pw, group):
     client.close()
 
 
-def backup_successful(name):
+def backup_successful(name: str):
     print('{0} {1} Backup successful\n!'.format(name, time.strftime('%d/%m/%Y %I:%M:%S %p')))
     logs.write('{0} {1} Backup successful\n'.format(name, time.strftime('%d/%m/%Y %I:%M:%S %p')))
 
-def unable_to_login(name):
+def unable_to_login(name: str):
     print('{0} {1} Unable to login![Host reachable]\n!'.format(name, time.strftime('%d/%m/%Y %I:%M:%S %p')))
     logs.write('{0} {1} Unable to login![Host reachable]\n'.format(name, time.strftime('%d/%m/%Y %I:%M:%S %p')))
 
-def timeout_error(name):
+def timeout_error(name: str):
     print('{0} {1} Backup failed!TimeoutError[Host reachable]\n!'.format(name, time.strftime('%d/%m/%Y %I:%M:%S %p')))
     logs.write('{0} {1} Backup failed!TimeoutError[Host reachable]\n'.format(name, time.strftime('%d/%m/%Y %I:%M:%S %p')))
 
-def backup_failed(name):
+def backup_failed(name: str):
     print('{0} {1} Backup failed![Host reachable]\n!'.format(name, time.strftime('%d/%m/%Y %I:%M:%S %p')))
     logs.write('{0} {1} Backup failed![Host reachable]\n'.format(name, time.strftime('%d/%m/%Y %I:%M:%S %p')))
 
-def unreachable(name):
+def unreachable(name: str):
     print('{0} {1} Host unreachable!\n!'.format(name, time.strftime('%d/%m/%Y %I:%M:%S %p')))
     logs.write('{0} {1} Host unreachable!\n'.format(name, time.strftime('%d/%m/%Y %I:%M:%S %p')))
           
